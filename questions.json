@@ -1,0 +1,20 @@
+{
+"day":"Day 1 - Biology Quiz",
+"questions": [
+{
+"q":"Which part pf the plant carries out photosynthesis?",
+"options":["Root","Stem","leaf","flower"],
+"answer":2
+},
+{
+"q":"Which blood cells help in clotting of blood?",
+"options":["RBC","WBC","Platelets","Plasma"],
+"answer":2
+},
+{
+"q":"The functional unit of the kidney is?",
+"options":["Neuron","Nephron","Alevoli","Villi"],
+"answer":1
+}
+]
+}

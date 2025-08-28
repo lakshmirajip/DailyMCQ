@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Class X Daily MCQ </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body { font-family: Arial, sans-serif; padding: 20px;}
+      .question {margin-bottom: 15px;}
+      .option {display: block; margin:5px 0;}
+      button {margin-top: 10px; padding: 10px 15px; border-radius: 8px; cursor: pointer; }
+      #result {font-weight: bold; margin-top: 20px;}
+    </style>
+  </head>
+  <body>
+    <h2 id="quiz-title"></h2>
+    <div id="quiz-container"></div>
+    <button onclick="checkAnswers()">Submit</button>
+    <p id="result"></p>
+
+    <script>
+      let quizData={};
+
+      fetch("questions.json")
+        .then(response=>response.json())
+        .then(data=> {
+          quizData=data;
+          document.getElementById("quiz-title").innerText=quizData.day;
+          renderQuiz();
+        })
+        .catch(err=> {
+          document.getElementById("quiz-container").innerHTML="<p>Could not load questions.</p>";
+        });
+
+        function renderQuiz()
+        {
+          let container = document.getElementById("quiz-container");
+          container.innerHTML = "";
+          quizData.questions.forEach((item,index)=> {
+            let qDiv=documet.getElementById("div");
+            qDiv.className="question";
+            qDiv.innerHTML=`<p>${index+1}.${item.q}</p>`;
+            item.options.forEach((opt,i)=> {
+              qDiv.innerHTML += `<label class="option">
+              <input type="radio" name="q${index}" value="${i}">${opt}
+              </label>`;
+            });
+            container.appendChild(qDiv);
+          });
+        }
+        function checkAnswers()
+        {
+          let score=0;
+          quizData.questions.forEach((item,index) => {
+            let selected= document.querySelector('input[name="q'=index+'"]:checked');
+            if(selected && parseInt(selected.value)==item.answer){score++;}
+          }); 
+          document.getElementbyId("result").innerText =
+            "You scored " + score + " out of " + quizData.questions.length;
+        }
+  </script>
+</body>
+</html>

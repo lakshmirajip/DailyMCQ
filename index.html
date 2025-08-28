@@ -54,10 +54,11 @@
             let selected= document.querySelector('input[name="q'=index+'"]:checked');
             if(selected && parseInt(selected.value)==item.answer){score++;}
           }); 
-          document.getElementbyId("result").innerText =
+          document.getElementById("result").innerText =
             "You scored " + score + " out of " + quizData.questions.length;
         }
   </script>
 </body>
 </html>
+
 

@@ -51,15 +51,18 @@
         {
           let score=0;
           quizData.questions.forEach((item,index) => {
-            let selected= document.querySelector('input[name="q'=index+'"]:checked');
+           let selected = document.querySelector('input[name="q' + index + '"]:checked');
+            document.getElementById("result").innerText =
+              "You scored " + score + " out of " + quizData.questions.length;
             if(selected && parseInt(selected.value)==item.answer){score++;}
           }); 
-          document.getElementById("result").innerText =
+          document.getElementbyId("result").innerText =
             "You scored " + score + " out of " + quizData.questions.length;
         }
   </script>
 </body>
 </html>
+
 
 
 

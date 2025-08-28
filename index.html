@@ -20,7 +20,7 @@
     <script>
       let quizData={};
 
-      fetch("https://lakshmirajip.github.io/DailyMCQ/questions.json")
+      fetch("questions.json")
         .then(response=>response.json())
         .then(data=> {
           quizData=data;
@@ -62,6 +62,7 @@
   </script>
 </body>
 </html>
+
 
 
 

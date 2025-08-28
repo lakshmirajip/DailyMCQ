@@ -36,7 +36,7 @@
           let container = document.getElementById("quiz-container");
           container.innerHTML = "";
           quizData.questions.forEach((item,index)=> {
-            let qDiv=documet.getElementById("div");
+            let qDiv=document.getElementById("div");
             qDiv.className="question";
             qDiv.innerHTML=`<p>${index+1}.${item.q}</p>`;
             item.options.forEach((opt,i)=> {
@@ -60,5 +60,6 @@
   </script>
 </body>
 </html>
+
 
 

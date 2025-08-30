@@ -4,88 +4,64 @@
     <title> Class X Daily MCQ </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-  body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto;}
-  .question { margin-bottom: 20px; padding: 10px; border-radius: 8px; background: #f9f9f9;}
-  .option { display: block; margin: 5px 0; }
-  button { margin-top: 15px; padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; background: #007bff; color: white; font-size: 16px; }
-  button:hover { background: #0056b3; }
-  #result { font-weight: bold; margin-top: 20px; font-size: 18px; }
-  .correct { background-color: #d4edda; } /* green background */
-  .wrong { background-color: #f8d7da; }   /* red background */
-</style>
+      body { font-family: Arial, sans-serif; padding: 20px;}
+      .question {margin-bottom: 15px;}
+      .option {display: block; margin:5px 0;}
+      button {margin-top: 10px; padding: 10px 15px; border-radius: 8px; cursor: pointer; }
+      #result {font-weight: bold; margin-top: 20px;}
+    </style>
+  </head>
+  <body>
+    <h2 id="quiz-title"></h2>
+    <div id="quiz-container"></div>
+    <button onclick="checkAnswers()">Submit</button>
+    <p id="result"></p>
 
-<script>
-  let quizData = {};
-  let currentDay = 1; // starting day
+    <script>
+      let quizData={};
 
-  function loadQuiz(day = 1) {
-    fetch(`questions.json`) // if you later have day1.json, day2.json → use `day${day}.json`
-      .then(response => response.json())
-      .then(data => {
-        quizData = data;
-        document.getElementById("quiz-title").innerText = quizData.day;
-        renderQuiz();
-        document.getElementById("result").innerText = "";
-      })
-      .catch(err => {
-        document.getElementById("quiz-container").innerHTML = "<p>Could not load questions.</p>";
-      });
-  }
+      fetch("questions.json")
+        .then(response=>response.json())
+        .then(data=> {
+          quizData=data;
+          document.getElementById("quiz-title").innerText=quizData.day;
+          renderQuiz();
+        })
+        .catch(err=> {
+          document.getElementById("quiz-container").innerHTML="<p>Could not load questions.</p>";
+        });
 
-  function renderQuiz() {
-    let container = document.getElementById("quiz-container");
-    container.innerHTML = "";
-    quizData.questions.forEach((item, index) => {
-      let qDiv = document.createElement("div");
-      qDiv.className = "question";
-      qDiv.innerHTML = `<p>${index + 1}. ${item.q}</p>`;
-      item.options.forEach((opt, i) => {
-        qDiv.innerHTML += `<label class="option">
-          <input type="radio" name="q${index}" value="${i}"> ${opt}
-        </label>`;
-      });
-      container.appendChild(qDiv);
-    });
-  }
-
-  function checkAnswers() {
-    let score = 0;
-    quizData.questions.forEach((item, index) => {
-      let selected = document.querySelector('input[name="q' + index + '"]:checked');
-      let options = document.getElementsByName("q" + index);
-      
-      options.forEach((opt, i) => {
-        let parent = opt.parentElement;
-        parent.classList.remove("correct", "wrong"); // reset classes
-        if (i == item.answer) {
-          parent.classList.add("correct"); // highlight correct
+        function renderQuiz()
+        {
+          let container = document.getElementById("quiz-container");
+          container.innerHTML = "";
+          quizData.questions.forEach((item,index)=> {
+            let qDiv=document.createElement("div");
+            qDiv.className="question";
+            qDiv.innerHTML=`<p>${index+1}.${item.q}</p>`;
+            item.options.forEach((opt,i)=> {
+              qDiv.innerHTML += `<label class="option">
+              <input type="radio" name="q${index}" value="${i}">${opt}
+              </label>`;
+            });
+            container.appendChild(qDiv);
+          });
         }
-      });
-
-      if (selected && parseInt(selected.value) == item.answer) {
-        score++;
-      } else if (selected) {
-        selected.parentElement.classList.add("wrong"); // highlight wrong selection
-      }
-    });
-
-    document.getElementById("result").innerText =
-      "You scored " + score + " out of " + quizData.questions.length;
-  }
-
-  function nextDay() {
-    currentDay++;
-    loadQuiz(currentDay);
-  }
-
-  // Load first quiz
-  loadQuiz(currentDay);
-</script>
-
+        function checkAnswers()
+        {
+          let score=0;
+          quizData.questions.forEach((item,index) => {
+           let selected = document.querySelector('input[name="q' + index + '"]:checked');
+            document.getElementById("result").innerText =
+              "You scored " + score + " out of " + quizData.questions.length;
+            if(selected && parseInt(selected.value)==item.answer){score++;}
+          }); 
+          document.getElementById("result").innerText =
+            "You scored " + score + " out of " + quizData.questions.length;
+        }
+  </script>
 </body>
 </html>
-
-
 
 
 
